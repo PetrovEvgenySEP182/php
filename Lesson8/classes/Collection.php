@@ -93,16 +93,14 @@ class Collection implements ArrayAccess, Iterator
         return $keys[ $this->possition ];
     }
 
-    public function valid()
-    {
+    public function valid(){
         $keys = $this->keys();
         return isset( $keys[ $this->possition ] );
     }
 
 
-    function __toString()
-    {
-    return $this->toJson();
+    function __toString(){
+        return $this->toJson();
     }
 
 }
