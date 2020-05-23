@@ -1,0 +1,14 @@
+{
+  "name": "petrovev/lesson13",
+  "version": "1.0.0",
+  "description": "Simple lib",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+  },
+  "autoload": {
+    "psr-4": {
+      "app\\": "./app"
+    }
+  }
+}
