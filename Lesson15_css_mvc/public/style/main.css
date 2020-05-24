@@ -1,0 +1,117 @@
+/* CSS */
+
+/*****************************
+*
+*       TOTAL Blocks
+*
+*****************************/
+
+body{
+    background-color: grey;
+}
+
+button{
+    border-radius: 5px;
+    border: 2px solid orange;
+    background-color: ForestGreen;
+    color: orange;
+    padding: 5px;
+}
+
+button:hover {
+    background-color: orange;
+    color: ForestGreen;
+}
+
+input{
+    border-radius: 5px;
+    border: 2px solid orange;
+    background-color: ForestGreen;
+    color: orange;
+}
+
+input::-webkit-input-placeholder {
+    color: LightGrey;
+}
+input::-moz-placeholder {
+    color: LightGrey;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/*****************************
+*
+*       NEW BOOK Blocks
+*
+*****************************/
+.new-book-container{
+    width: 500px;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: ForestGreen;
+    border-radius: 5px;
+}
+
+.new-book-container div {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+}
+
+.new-book-container div input{
+    margin: 5px;
+    padding: 5px;
+    width: 395px;
+}
+
+.new-book-container button {
+    margin: 5px 10px 5px 0;
+    height: 70px;
+}
+
+
+/*****************************
+*
+*       LIST BOOK Blocks
+*
+*****************************/
+
+.books-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: ForestGreen;
+    border-radius: 5px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 500px;
+}
+
+.books-container li{
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+}
+
+.books-container li div{
+    border-radius: 5px;
+    border: 2px solid orange;
+    background-color: ForestGreen;
+    color: orange;
+    width: 390px;
+    margin: 10px 5px 5px 5px;
+    padding: 5px;
+}
+
+.books-container li form{
+    margin: 10px 5px 5px 5px;
+}
+
