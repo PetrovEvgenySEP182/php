@@ -72,9 +72,18 @@
             </div>
         </nav>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+        <div class="container py-4 d-flex">
+
+            <div class="d-flex flex-column block mr-2" style="width: 75%;">
+
+            {{--        <main class="container py-4">--}}
+                @yield('content')
+            </div>
+{{--        </main>--}}
+            <div class="d-flex card align-items-center p-2" style="width: 25%; max-height: 150px">
+                @include('user-menu')
+            </div>
+        </div>
     </div>
 </body>
 </html>
