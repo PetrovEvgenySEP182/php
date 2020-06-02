@@ -25,45 +25,48 @@ class NewsController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $data = $this->validated($request);
+
+        $news = auth()->user()->news();
+        $news->create($data);
+        return redirect()->route('news.index');
     }
 
     public function show(News $news)
     {
-        //
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\News  $news
-     * @return \Illuminate\Http\Response
-     */
     public function edit(News $news)
     {
-        //
+        return view('news.form', compact('news'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\News  $news
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, News $news)
     {
-        //
+        $data = $this->validated($request, $news);
+
+        $news->update($data);
+        return redirect()->route('news.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\News  $news
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(News $news)
     {
-        //
+        $news->delete();
+        return redirect()->route('$news.index');
+    }
+
+    protected function validated(Request $request, News $news = null ){
+        $rules = [
+            'title' => 'required|min:5|max:100|unique:news',
+            'text' => 'required|min:10',
+            'category_id' => 'required|category'
+        ];
+        if($news)
+            $rules['title'] .= ',title,' . $news->id;
+
+        return $request->validate($rules, [
+            'category' => 'Category doesn\'t match'
+        ]);
     }
 }

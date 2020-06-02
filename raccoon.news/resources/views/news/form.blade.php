@@ -6,11 +6,11 @@ $update = isset($news);
 
 @section('content')
 
-    <h2>{{$update ? 'Редактирование' : 'Новая новость'}}</h2>
-
     <div class="card card-body">
 
-        <form action="{{ $update ? route('news.update', $todo) : route('news.store')}}" method="post">
+        <h2>{{$update ? 'Редактирование' : 'Новая новость'}}</h2>
+
+        <form action="{{ $update ? route('news.update', $news) : route('news.store')}}" method="post">
             @csrf
             @if($update)
                 @method('PUT')
@@ -30,14 +30,14 @@ $update = isset($news);
             </div>
 
             <div class="form-group">
-                <label for="category">Категория</label>
-                <select name="category" id="category" class="form-control">
-                    @foreach($categories as $key => $value)
-                        <option @if(($news->category ?? '') == $value || old('category') === $key) selected @endif value="{{ $key }}">{{ $value->name }}</option>
+                <label for="category_id">Категория <span class="text-danger">*</span></label>
+                <select name="category_id" id="category_id" class="form-control">
+                    @foreach($categories as $value)
+                        <option @if(($news->category_id ?? '') == $value->id || old('category_id') === $value->id) selected @endif value="{{ $value->id }}">{{ $value->name }}</option>
                     @endforeach
                 </select>
 
-                @error('category')
+                @error('category_id')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
@@ -45,9 +45,24 @@ $update = isset($news);
             </div>
 
             <div class="form-group">
-                <label for="text">Текст</label>
-                <textarea class="form-control" type="text" name="text"
-                          id="text">{{old('text') ?? ($news->text ?? '')}}</textarea>
+                <label for="image_url">Картинка </label>
+                <input class="form-control"
+                       type="text" name="image_url" id="image_url"
+                       placeholder="URL картинки..."
+                       value="{{old('image_url') ?? ( $news->image_url ?? '' )}}">
+            </div>
+
+            <div class="form-group">
+                <label for="text">Текст <span class="text-danger">*</span></label>
+                <textarea class="form-control @error('text') is-invalid @enderror" type="text" name="text"
+                          id="text">{{old('text') ?? ($news->text ?? '')}}
+                </textarea>
+
+                @error('text')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
             </div>
 
 

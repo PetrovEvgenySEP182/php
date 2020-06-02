@@ -36,17 +36,21 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
-        //
+        return view('categories.form', compact('category'));
     }
 
     public function update(Request $request, Category $category)
     {
-        //
+        $data = $this->validated($request, $category);
+
+        $category->update($data);
+        return redirect()->route('categories.index');
     }
 
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->route('categories.index');
     }
 
     protected function validated(Request $request, Category $category = null ){
@@ -54,7 +58,7 @@ class CategoryController extends Controller
             'name' => 'required|min:5|max:100|unique:categories'
         ];
         if($category)
-            $rules['name'] .= ',title,' . $category->id;
+            $rules['name'] .= ',name,' . $category->id;
 
         return $request->validate($rules);
     }

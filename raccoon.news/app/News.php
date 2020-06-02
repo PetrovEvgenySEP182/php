@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read $id
  * @property $title
  * @property $text
+ * @property $image_url
  * @property $user_id
  * @property $category_id
  * @property-read $created_at
@@ -21,7 +22,7 @@ use Illuminate\Database\Eloquent\Model;
 class News extends Model
 {
     protected $fillable = [
-        'title', 'text', 'user_id', 'category_id'
+        'title', 'text', 'image_url', 'user_id', 'category_id'
     ];
 
     function category(){
@@ -30,5 +31,9 @@ class News extends Model
 
     function user(){
        return $this->belongsTo(User::class);
+    }
+
+    function getTextPreview(int $size = 200){
+        return substr($this->text, 0, $size) . (($size < strlen($this->text)) ? "..." : "");
     }
 }

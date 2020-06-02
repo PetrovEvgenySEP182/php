@@ -9,7 +9,7 @@ $update = isset($category);
     <div class="card card-body">
         <h2>{{$update ? 'Редактирование' : 'Новая категория'}}</h2>
 
-        <form action="{{ $update ? route('categories.update', $todo) : route('categories.store')}}" method="post">
+        <form action="{{ $update ? route('categories.update', $category) : route('categories.store')}}" method="post">
             @csrf
             @if($update)
                 @method('PUT')
@@ -20,7 +20,7 @@ $update = isset($category);
                 <input class="form-control @error('name') is-invalid @enderror"
                        type="text" name="name" id="name"
                        placeholder="Наименование..."
-                       value="{{old('name') ?? ( $categories->name ?? '' )}}">
+                       value="{{old('name') ?? ( $category->name ?? '' )}}">
                 @error('name')
                 <div class="invalid-feedback">
                     {{ $message }}

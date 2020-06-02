@@ -3,15 +3,21 @@
 @section('content')
 
     <div class="card p-2">
-        <a href="{{route('categories.create')}}" class="mr-auto btn btn-success mb-3">
-            Добавить категорию
-        </a>
+
+        <div class="d-flex">
+            <h2 class="mt-3 ml-2 mb-3">Категории новостей</h2>
+
+            <a href="{{route('categories.create')}}" class="ml-auto btn btn-success m-3">
+                Добавить категорию
+            </a>
+        </div>
+
 
         @forelse($categories as $category)
             @if($loop->first)
                 <table class="table table-bordered table-striped"><thead>
                     <tr>
-                        <th>№</th>
+                        <th class="w-auto">№</th>
                         <th>Наименование</th>
                         <th>Действия</th>
                     </tr>
@@ -22,15 +28,13 @@
                         <td class="p-2 text-center">{{$loop->index + 1}}</td>
                         <td class="p-2">{{ $category->name }}</td>
 
-                        <td class="pd-0">
+                        <td class="p-1 align-content-center w-25">
 
                             <form class="ml-auto" action="{{route('categories.destroy', $category)}}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <div class="btn-group">
-                                    @can('update', $category)
-                                        <a class="btn btn-info" href="{{route('categories.edit', $category)}}">Редактировать</a>
-                                    @endcan
+                                    <a class="btn btn-info" href="{{route('categories.edit', $category)}}">Редактировать</a>
                                     <button class="btn btn-danger">Удалить</button>
                                 </div>
                             </form>
