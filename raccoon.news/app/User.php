@@ -18,6 +18,7 @@ use Illuminate\Notifications\Notifiable;
  * @property-read $created_at
  * @property-read $updated_at
  * @property News[]|\Illuminate\Database\Eloquent\Collection $news
+ * @property boolean $admin
  */
 class User extends Authenticatable
 {
@@ -33,6 +34,7 @@ class User extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'admin' => 'boolean',
     ];
 
     function news(){

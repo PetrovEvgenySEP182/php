@@ -24,4 +24,12 @@ class Category extends Model
         $list = self::on()->where('id', $value)->get();
         return isset($list);
     }
+
+    public static function emptyCategory() : Category{
+        $tmp = new Category();
+        $tmp->id = 0;
+        $tmp->name = "Все категории";
+        return $tmp;
+    }
+
 }

@@ -83,9 +83,11 @@
                     @yield('content')
                 </div>
 
-                <div class="d-flex card align-items-center p-2" style="width: 25%; max-height: 150px">
-                    @include('user-menu')
-                </div>
+                @if(isset($user))
+                    <div class="d-flex flex-column block mr-2" style="width: 25%">
+                        @include('right-menus')
+                    </div>
+                @endif
             </div>
         @endguest
     </div>

@@ -33,7 +33,7 @@ class News extends Model
        return $this->belongsTo(User::class);
     }
 
-    function getTextPreview(int $size = 200){
+    function getTextPreview(int $size = 1000){
         return substr($this->text, 0, $size) . (($size < strlen($this->text)) ? "..." : "");
     }
 }

@@ -10,19 +10,24 @@ class CategoryController extends Controller
 
     public function index()
     {
+        $this->authorize('view', new Category());
+
         $user = auth()->user();
-        $categories = Category::all();
+        $categories = Category::on()->paginate(10);
+
         return view('categories.index', compact('user', 'categories'));
     }
 
     public function create()
     {
+        $this->authorize('create', Category::class);
         $user = auth()->user();
         return view('categories.form', compact('user'));
     }
 
     public function store(Request $request)
     {
+        $this->authorize('create', Category::class);
         $data = $this->validated($request);
 
         Category::on()->create($data);
@@ -36,11 +41,13 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
+        $this->authorize('update', $category);
         return view('categories.form', compact('category'));
     }
 
     public function update(Request $request, Category $category)
     {
+        $this->authorize('update', $category);
         $data = $this->validated($request, $category);
 
         $category->update($data);
@@ -49,6 +56,7 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
+        $this->authorize('delete', $category);
         $category->delete();
         return redirect()->route('categories.index');
     }

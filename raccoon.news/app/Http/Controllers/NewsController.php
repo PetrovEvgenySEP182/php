@@ -9,15 +9,28 @@ use Illuminate\Http\Request;
 class NewsController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
+        $MAX_NEWS_ON_PAGE = 10;
+
+        $category_id = $request->request->all()['category_id'] ?? 0;
+        if($category_id){
+            $news = News::on()->where('category_id', $category_id)->paginate($MAX_NEWS_ON_PAGE);
+        } else {
+            $news = News::on()->paginate($MAX_NEWS_ON_PAGE);
+        }
         $user = auth()->user();
-        $news = News::all();
-        return view('news.index', compact('user', 'news'));
+
+        $main_categories = Category::all();
+        $main_categories->prepend(Category::emptyCategory());
+
+        return view('news.index', compact('user', 'news', 'main_categories', 'category_id'));
     }
 
     public function create()
     {
+        $this->authorize('create', News::class);
+
         $user = auth()->user();
         $categories = Category::all();
         return view('news.form', compact('user','categories'));
@@ -25,6 +38,7 @@ class NewsController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('create', News::class);
         $data = $this->validated($request);
 
         $news = auth()->user()->news();
@@ -34,16 +48,23 @@ class NewsController extends Controller
 
     public function show(News $news)
     {
-
+        $user = auth()->user();
+        return view('news.show', compact('user', 'news'));
     }
 
     public function edit(News $news)
     {
-        return view('news.form', compact('news'));
+        $this->authorize('update', $news);
+
+        $user = auth()->user();
+        $categories = Category::all();
+        return view('news.form', compact('news', 'user', 'categories'));
     }
 
     public function update(Request $request, News $news)
     {
+        dd($request);
+        $this->authorize('update', $news);
         $data = $this->validated($request, $news);
 
         $news->update($data);
@@ -52,8 +73,14 @@ class NewsController extends Controller
 
     public function destroy(News $news)
     {
+        $this->authorize('delete', $news);
+
         $news->delete();
-        return redirect()->route('$news.index');
+        return redirect()->route('news.index');
+    }
+
+    public function sort($category_id){
+
     }
 
     protected function validated(Request $request, News $news = null ){
