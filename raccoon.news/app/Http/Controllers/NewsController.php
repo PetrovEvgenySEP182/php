@@ -15,9 +15,9 @@ class NewsController extends Controller
 
         $category_id = $request->request->all()['category_id'] ?? 0;
         if($category_id){
-            $news = News::on()->where('category_id', $category_id)->paginate($MAX_NEWS_ON_PAGE);
+            $news = News::on()->where('category_id', $category_id)->orderByDesc('created_at')->paginate($MAX_NEWS_ON_PAGE);
         } else {
-            $news = News::on()->paginate($MAX_NEWS_ON_PAGE);
+            $news = News::on()->orderByDesc('created_at')->paginate($MAX_NEWS_ON_PAGE);
         }
         $user = auth()->user();
 
@@ -63,7 +63,6 @@ class NewsController extends Controller
 
     public function update(Request $request, News $news)
     {
-        dd($request);
         $this->authorize('update', $news);
         $data = $this->validated($request, $news);
 
@@ -87,7 +86,8 @@ class NewsController extends Controller
         $rules = [
             'title' => 'required|min:5|max:100|unique:news',
             'text' => 'required|min:10',
-            'category_id' => 'required|category'
+            'category_id' => 'required|category',
+            'image_url' => 'nullable'
         ];
         if($news)
             $rules['title'] .= ',title,' . $news->id;

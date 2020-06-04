@@ -25,13 +25,15 @@ $default_image = '/img/no-img.jpg';
             </form>
 
         </div>
+
         <div class="d-flex flex-row" style="font-size: 12px">
             <img src="@if($news->image_url){{$news->image_url}} @else {{$default_image}} @endif"
-                 style="width: 200px" class="mr-2">
+                 style="width: 200px" class="mr-2 mb-auto">
             <div class="d-flex">
                 <p>{{$news->text}}</p>
             </div>
         </div>
+
         <div class="d-flex mt-2" style="font-size: 10px">
             <p class="mr-1">{{$news->user->name}}, </p>
             <p class="mr-1">{{$news->category->name}}, </p>

@@ -14,7 +14,7 @@ $default_image = '/img/no-img.jpg';
             </div>
             <div class="d-flex flex-row" style="font-size: 12px">
                 <img src="@if($item->image_url){{$item->image_url}} @else {{$default_image}} @endif"
-                     style="width: 200px" class="mr-2">
+                     style="width: 200px" class="mr-2 mb-auto">
                 <div class="d-flex">
                     <p>{{$item->getTextPreview()}}</p>
                 </div>
